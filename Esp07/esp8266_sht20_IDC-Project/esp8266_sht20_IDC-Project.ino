@@ -8,7 +8,7 @@
 
 const char* ssid     = "Avilon-IOT";
 const char* password = "avilonIDC";
-const char* mqtt_server = " broker.netpie.io";
+const char* mqtt_server = "broker.netpie.io";
 
 WiFiClient espClient;
 ESP8266WebServer server(80); //Server on port 80
