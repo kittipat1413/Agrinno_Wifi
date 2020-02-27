@@ -8,9 +8,7 @@
 
 const char* ssid     = "Avilon-IOT";
 const char* password = "avilonIDC";
-//const char* ssid     = "INET-Office";
-//const char* password = "mis@Pass01";
-const char* mqtt_server = "gb.netpie.io";
+const char* mqtt_server = " mqtt.netpie.io";
 
 WiFiClient espClient;
 ESP8266WebServer server(80); //Server on port 80
@@ -53,8 +51,8 @@ void netpie_connect() {
   // Loop until we're reconnected
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
-    // Attempt to connect
-    if (client.connect("eb5f2f03-584c-4617-8b53-494bce330fd8","rHG1WYteEwZDCyCLBsQnRCyMYY4SK7MH","rHG1WYteEwZDCyCLBsQnRCyMYY4SK7MH")) {
+    // Attempt to connect netpie kittipat
+    if (client.connect("6b66fb85-8aa7-4185-a5de-96648b51d4df","ig86u3waqqiThz7yeozByVA4SpSSs9Vd","p#939uPJ7^^IORm.PNXV)fCoJ@@3+QNS")) {
       reset_cnt = 0;
       Serial.println("connected");
     } 
@@ -88,7 +86,7 @@ void setup() {
     Serial1.begin(115200);
   
     WiFi.mode(WIFI_AP_STA); 
-    WiFi.softAP("IDCROOM09", "avilonIDC");  //Start HOTspot removing password will disable security
+    WiFi.softAP("Agrinno_wifi_esp", "12345678");  //Start HOTspot removing password will disable security
     server.on("/", handleRoot);      //Which routine to handle at root location
     server.begin();                  //Start 
     /* Initial WIFI, this is just a basic method to configure WIFI on ESP8266.                       */
@@ -163,8 +161,8 @@ void loop() {
             Serial.print("%");
             Serial.println();
                     
-            sprintf(buffer, "{temp:%.2f,humid:%.2f}",temp,humi);
-            client.publish("/@writefeed/IDCROOM09",buffer );
+            sprintf(buffer, "{\"data\" : { \"temp\": %.2f , \"humi\": %.2f } }",temp,humi);
+            client.publish("@shadow/data/update",buffer );
             delay(100);
             
             digitalWrite(LED, HIGH);
