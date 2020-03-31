@@ -40,8 +40,10 @@ CFLAGS_INCLUDE=-I./ \
 USER_LIB=../User_Lib
 
 #User Source Files
-SRC+=	./main.c \
-		./stm32f10x_it.c 
+SRC+=	./main_dev.c \
+		./stm32f10x_it.c \
+		./CircularBuffer.c \
+		./ATparser.c 
 
 
 #User Header Files

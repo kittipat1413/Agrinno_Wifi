@@ -1,7 +1,7 @@
 #include "ATparser.h"
 
 void atparser_init(atparser_t* self, atparser_reader reader,atparser_writer writer, atparser_readableFunc readable, atparser_sleepFunc sleep){
-    self->timeout = 8000000;
+    self->timeout = 80000;
     self->_buffer_size = 512;
     
     self->read = reader;
@@ -9,7 +9,7 @@ void atparser_init(atparser_t* self, atparser_reader reader,atparser_writer writ
     self->readable = readable;
     self->sleep = sleep;
 
-    self->interval = 500;
+    self->interval = 1000;
     atparser_set_delimiter(self,"\r\n");
 }
 
@@ -101,6 +101,7 @@ bool atparser_send(atparser_t* self, const char *command, ...){
     return res;
 }
 
+
 bool atparser_vrecv(atparser_t* self, const char *response, va_list args){
 restart:
     // Iterate through each line in the expected response
@@ -144,11 +145,13 @@ restart:
         int j = 0;
 
         while (true) {
+
             // If just peeking for OOBs, and at start of line, check
             // readability
             if (!response && j == 0 && !self->readable()) {
                 return false;
             }
+
             // Receive next character
             int c = atparser_getc(self);
             if (c < 0) {
